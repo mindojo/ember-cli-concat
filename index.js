@@ -110,6 +110,18 @@ module.exports = {
 
   outputFileName: 'app',
 
+
+  /**
+  If you want prefix in `src`/`path` attribute be different from the actual outputFileName, for example,
+  don't have initial back slash.
+
+  @property srcPrefix
+  @type String
+  @default null
+  */
+  srcPrefix: null,
+
+
   /**
   Whether or not to use self closing HTML tags for the `<style>` and `<link>` tags to be compatible with certain (outdated :p) templating engines.
   For example, if you set `useSelfClosingTags` to `true`:
@@ -177,7 +189,8 @@ module.exports = {
   },
 
   outputAppPath: function(ext) {
-    return this.getAssetTag(ext, "/" + this.outputDir + "/" + this.outputFileName + "." + ext);
+    var prefix = (this.srcPrefix || ("/" + this.outputDir)) + '/'.replace('//', '/');
+    return this.getAssetTag(ext, prefix + this.outputFileName + "." + ext);
   },
 
   appPath: function(ext, relPath) {
